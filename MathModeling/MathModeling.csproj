@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Meta.Numerics" Version="4.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MoreLinq">
+      <HintPath>C:\Users\p.zhdanovich\.nuget\packages\morelinq\3.0.0\lib\netstandard2.0\MoreLinq.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
