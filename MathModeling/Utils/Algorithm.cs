@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 
-namespace Lab2Deposit.Utils
+namespace MathModeling.Utils
 {
     public static class Algorithm
     {
         public static double BinaryArgumentSearch(this Func<double, double> increasingFunc, double expectedResult,
-            double from, double to, double argumentEps = 0.01)
+            double from = double.MinValue, double to = double.MinValue, double argumentEps = 0.01)
         {
             while (to - from > argumentEps * 10)
             {

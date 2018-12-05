@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Lab2Deposit.Utils;
 using MathModeling.Brv;
+using MathModeling.Utils;
 using Meta.Numerics.Functions;
 
 namespace MathModeling.Rv

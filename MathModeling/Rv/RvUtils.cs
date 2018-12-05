@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MoreLinq;
 
 namespace MathModeling.Rv
 {
@@ -9,31 +8,33 @@ namespace MathModeling.Rv
     {
         public const double RarefiedBoundEps = 0.01;
 
-        public static double ChiSquaredTest(IReadOnlyCollection<double> values, Func<double, double> distributionFunc, int gridSize)
+        public static double ChiSquaredTest(IReadOnlyCollection<double> values, Func<double, double> distributionFunc,
+            int gridSize, double lowerBound, double upperBound)
         {
+            var snippetLength = (upperBound - lowerBound) / (gridSize - 1);
+
             int GetSectionNumber(double x)
             {
-                if (x >= gridSize - 1)
+                if (x <= lowerBound || x >= upperBound)
                 {
                     return gridSize - 1;
                 }
 
-                return (int)x;
+                return (int) Math.Floor((x - lowerBound) / snippetLength);
             }
 
-            var probabilities = new double[gridSize];
-            foreach (var section in Enumerable.Range(0, gridSize - 1))
-            {
-                probabilities[section] = distributionFunc(section + 1) -
-                                         distributionFunc(section);
-            }
-            probabilities[gridSize - 1] = 1 - distributionFunc(gridSize - 1);
-
+            var probabilities = Enumerable.Range(0, gridSize - 1)
+                .Select(x => distributionFunc(lowerBound + (x + 1) * snippetLength) -
+                             distributionFunc(lowerBound + x * snippetLength))
+                .Append(1 - distributionFunc(upperBound) + distributionFunc(lowerBound))
+                .ToArray();
+ 
             var frequencies = new double[gridSize];
             values
                 .Select(GetSectionNumber)
                 .GroupBy(x => x)
-                .ForEach(x => frequencies[x.Key] = (double)x.Count() / values.Count);
+                .ToList()
+                .ForEach(x => frequencies[x.Key] = (double) x.Count() / values.Count);
 
             return CalcChiSquare(frequencies, probabilities) * values.Count;
         }

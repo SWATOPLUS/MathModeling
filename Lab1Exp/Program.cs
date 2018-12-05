@@ -26,7 +26,8 @@ namespace Lab1Exp
                     .ToArray();
 
                 Console.WriteLine($"Lambda is {generator.Lambda}");
-                var chi2 = RvUtils.ChiSquaredTest(values, generator.DistributionFunction, gridSize);
+                var chi2 = RvUtils.ChiSquaredTest(values, generator.DistributionFunction, gridSize,
+                    generator.LowerRarefiedBound, generator.UpperRarefiedBound);
                 Console.WriteLine($"Chi^2 is {chi2}");
                 Console.WriteLine($"Degrees of freedom is {gridSize - 1}");
             }

@@ -1,6 +1,6 @@
 ﻿using System;
-using Lab2Deposit.Utils;
 using MathModeling.Brv;
+using MathModeling.Utils;
 
 namespace MathModeling.Rv
 {
