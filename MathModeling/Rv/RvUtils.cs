@@ -26,7 +26,8 @@ namespace MathModeling.Rv
             var probabilities = Enumerable.Range(0, gridSize - 1)
                 .Select(x => distributionFunc(lowerBound + (x + 1) * snippetLength) -
                              distributionFunc(lowerBound + x * snippetLength))
-                .Append(1 - distributionFunc(upperBound) + distributionFunc(lowerBound))
+                // todo: do we really need this?
+                //.Append(1 - distributionFunc(upperBound) + distributionFunc(lowerBound))
                 .ToArray();
  
             var frequencies = new double[gridSize];
@@ -45,6 +46,11 @@ namespace MathModeling.Rv
             var value = 0.0;
             for (var i = 0; i < len; i++)
             {
+                if (theoretical[i] < 1e-6 && practical[i] < 1e-6)
+                {
+                    continue;
+                }
+
                 value += Math.Pow(practical[i] - theoretical[i], 2) / theoretical[i];
             }
 
