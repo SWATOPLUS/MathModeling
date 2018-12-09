@@ -56,6 +56,13 @@ namespace MathModeling.Rv
 
             return value;
         }
+
+        public static IEnumerable<double> GetValues(this IValueGenerator generator, int count)
+        {
+            return Enumerable
+                .Range(0, count)
+                .Select(x => generator.Generate());
+        }
     }
 
 }

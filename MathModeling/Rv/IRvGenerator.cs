@@ -2,7 +2,7 @@
 
 namespace MathModeling.Rv
 {
-    public interface IRvGenerator
+    public interface IRvGenerator : IValueGenerator
     {
         string Name { get; }
 
@@ -11,7 +11,5 @@ namespace MathModeling.Rv
         double LowerRarefiedBound { get; }
 
         double UpperRarefiedBound { get; }
-
-        double Generate();
     }
 }
