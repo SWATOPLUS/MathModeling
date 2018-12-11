@@ -32,12 +32,7 @@ namespace Lab2Deposit
             TestGenerator(normalGenerator);
             TestGenerator(discreteGenerator);
 
-            var factory = new MarkovChainFactory
-            (
-                sensor,
-                MarkovSettings,
-                1
-            );
+            var factory = new MarkovChainFactory(sensor,MarkovSettings,1);
             var markovGenerator = new MarkovGenerator(factory, MarkovValues, 90, x => 1830.0 + x);
 
             SolveTask(discreteGenerator, discreteGenerator.Name);
@@ -95,7 +90,6 @@ namespace Lab2Deposit
             {
                 return 2;
             }
-
 
             return 3;
         }
