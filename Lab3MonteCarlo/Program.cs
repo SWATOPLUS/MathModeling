@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using MathModeling.MonteCarlo;
 
 namespace Lab3MonteCarlo
@@ -32,16 +31,25 @@ namespace Lab3MonteCarlo
             var calculator = new MonteCarloIntegralCalculator(-1, 3, x => Math.Exp(-x * x) * Math.Cos(x));
 
             Console.WriteLine($"Real value {realValue}");
+
+            Console.WriteLine("Simple method");
             Console.WriteLine("N\t  result\terror");
 
             foreach (var sampleSize in sampleSizes)
             {
-                foreach (var _ in Enumerable.Range(0, repeats))
-                {
-                    var integral = calculator.CalculateIntegral(sampleSize);
-                    var error = Math.Abs(integral - realValue);
-                    Console.WriteLine($"{sampleSize.ToString().PadRight(10)}{integral:E}\t{error:E}");
-                }
+                var integral = calculator.CalculateIntegral(sampleSize);
+                var error = Math.Abs(integral - realValue);
+                Console.WriteLine($"{sampleSize.ToString().PadRight(10)}{integral:E}\t{error:E}");
+            }
+
+            Console.WriteLine("Symmetrization method");
+            Console.WriteLine("N\t  result\terror");
+
+            foreach (var sampleSize in sampleSizes)
+            {
+                var integral = calculator.CalculateIntegralWithSymmetrization(sampleSize);
+                var error = Math.Abs(integral - realValue);
+                Console.WriteLine($"{sampleSize.ToString().PadRight(10)}{integral:E}\t{error:E}");
             }
 
         }

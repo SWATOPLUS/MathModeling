@@ -28,12 +28,20 @@ namespace MathModeling.MonteCarlo
                 .Select(x => a + (b - a) * x);
         }
 
-        public double CalculateIntegral(int n)
+        public double CalculateIntegral(int sampleSize)
         {
-            var values = GetUniformRandomValues(n, From, To)
+            var values = GetUniformRandomValues(sampleSize, From, To)
                 .Select(IntegralFunction);
 
             return (To - From) * values.Average();
+        }
+
+        public double CalculateIntegralWithSymmetrization(int sampleSize)
+        {
+            var values = GetUniformRandomValues(sampleSize, From, To)
+                .Select(x => IntegralFunction(x) + IntegralFunction(From + To - x));
+
+            return (To - From) * values.Average() / 2.0;
         }
     }
 }
