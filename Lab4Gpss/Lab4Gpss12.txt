@@ -1,0 +1,25 @@
+VA EQU 160		; Время поступления деталей на обработку
+VD EQU 90			; и его отклонение
+INITIAL X$VB,280		; Время обработки детали на станке
+INITIAL X$VE,30		; и его отклонение
+INITIAL X$VC,10		; Время переноса детали на выходной конвеер
+INITIAL X$VV,2		; и его отклонение
+
+MSECTION	STORAGE	2	; Создаем накопитель участка механообработки 
+	GENERATE	VA,VD	; Моделируем поступление детали
+          ENTER	MSECTION	; Помещаем деталь в накопитель
+	TRANSFER	ALL,OPR1,OPR2,3	; Перебираем операторов обработки
+OPR1      SEIZE	OP1	
+	ASSIGN	1,OP1
+	TRANSFER	,COME
+OPR2      SEIZE	OP2
+	ASSIGN	1,OP2
+COME      LEAVE	MSECTION	; Убираем деталь из накопителя
+	ADVANCE	VC,VV	; Ожидаем перемещения детали на станок
+	ADVANCE	VB,VE	; Ожидаем обработки детали на санке
+	RELEASE	P1	; Освобождаем станок
+	ADVANCE	VC,VV	; Ожидаем перемещения детали на выходной конвеер
+	TERMINATE	0	; Завершаем обработку детали
+	GENERATE	28800
+	TERMINATE	1
+	START	1
